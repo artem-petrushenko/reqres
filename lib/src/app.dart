@@ -1,14 +1,19 @@
 import 'package:get/get.dart';
 
 import 'package:flutter/material.dart';
-import 'package:reqres/src/data/client/http_client.dart';
-import 'package:reqres/src/data/repository/users_repository_impl.dart';
+
+import 'package:reqres/src/logic/controller_binding.dart';
 
 import 'package:reqres/src/widget/view/users/users_view.dart';
 import 'package:reqres/src/widget/view/user_details/user_details_view.dart';
 
+import 'package:reqres/src/data/repository/user_repository_impl.dart';
+import 'package:reqres/src/data/repository/users_repository_impl.dart';
+
 import 'package:reqres/src/data/provider/users_network_data_provider_impl.dart';
-import 'package:reqres/src/logic/controller_binding.dart';
+import 'package:reqres/src/data/provider/user_network_data_provider_impl.dart';
+
+import 'package:reqres/src/data/client/http_client.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -25,6 +30,11 @@ class App extends StatelessWidget {
       initialBinding: ControllerBinding(
         usersRepository: UsersRepositoryImpl(
           usersNetworkDataProvider: UsersNetworkDataProviderImpl(
+            httpClient: httpClient,
+          ),
+        ),
+        userRepository: UserRepositoryImpl(
+          userNetworkDataProvider: UserNetworkDataProviderImpl(
             httpClient: httpClient,
           ),
         ),
