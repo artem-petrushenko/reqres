@@ -1,19 +1,45 @@
+import 'package:get/get.dart';
+
 import 'package:flutter/material.dart';
+import 'package:reqres/src/data/client/http_client.dart';
+import 'package:reqres/src/data/repository/users_repository_impl.dart';
 
 import 'package:reqres/src/widget/view/users/users_view.dart';
+import 'package:reqres/src/widget/view/user_details/user_details_view.dart';
+
+import 'package:reqres/src/data/provider/users_network_data_provider_impl.dart';
+import 'package:reqres/src/logic/controller_binding.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    final httpClient = HTTPClient.getInstance();
+    return GetMaterialApp(
       title: 'Reqres',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const UsersView(),
+      initialBinding: ControllerBinding(
+        usersRepository: UsersRepositoryImpl(
+          usersNetworkDataProvider: UsersNetworkDataProviderImpl(
+            httpClient: httpClient,
+          ),
+        ),
+      ),
+      initialRoute: '/users',
+      getPages: [
+        GetPage(
+          name: '/users',
+          page: () => const UsersView(),
+        ),
+        GetPage(
+          name: '/user',
+          page: () => const UserDetailsView(),
+        ),
+      ],
     );
   }
 }

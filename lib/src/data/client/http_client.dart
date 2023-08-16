@@ -13,7 +13,7 @@ class HTTPClient {
     return _instance;
   }
 
-  Future<dynamic> get({
+  Future<Map<String, dynamic>> get({
     required String endpoint,
     Map<String, dynamic>? queryParameters,
   }) async {
@@ -21,7 +21,7 @@ class HTTPClient {
       final response = await http.get(
         Uri.https(host, endpoint, queryParameters),
       );
-      return jsonDecode(response.body);
+      return jsonDecode(response.body) as Map<String, dynamic>;
     } catch (error) {
       throw Exception(error.toString());
     }
