@@ -24,4 +24,14 @@ class KeyValueStorage {
     _preferences = await SharedPreferences.getInstance();
     await _preferences.setString(key, value);
   }
+
+  Future<List<String>?> getStringList(String key) async {
+    _preferences = await SharedPreferences.getInstance();
+    return _preferences.getStringList(key);
+  }
+
+  Future<void> setStringList(String key, List<String> value) async {
+    _preferences = await SharedPreferences.getInstance();
+    await _preferences.setStringList(key, value);
+  }
 }
