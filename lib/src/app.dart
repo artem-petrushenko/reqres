@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 
 import 'package:flutter/material.dart';
+import 'package:reqres/src/data/client/key_value_storage.dart';
+import 'package:reqres/src/data/provider/user_storage_impl.dart';
 
 import 'package:reqres/src/logic/controller_binding.dart';
 
@@ -21,6 +23,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final httpClient = HTTPClient.getInstance();
+    final keyValueStorage = KeyValueStorage.getInstance();
     return GetMaterialApp(
       title: 'Reqres',
       theme: ThemeData(
@@ -37,6 +40,7 @@ class App extends StatelessWidget {
           userNetworkDataProvider: UserNetworkDataProviderImpl(
             httpClient: httpClient,
           ),
+          userStorage: UserStorageImpl(keyValueStorage: keyValueStorage),
         ),
       ),
       initialRoute: '/users',
