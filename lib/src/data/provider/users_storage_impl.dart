@@ -13,9 +13,11 @@ class UsersStorageImpl implements UsersStorage {
   }) : _keyValueStorage = keyValueStorage;
 
   @override
-  Future<List<User>> readUsers() async {
-    final userListStrings = await _keyValueStorage.getStringList('users');
-
+  Future<List<User>> readUsers({
+    required int page,
+    required int pageSize,
+  }) async {
+    final userListStrings = await _keyValueStorage.getStringList('users$page');
     if (userListStrings == null) {
       return [];
     }
@@ -26,8 +28,9 @@ class UsersStorageImpl implements UsersStorage {
   }
 
   @override
-  Future<void> writeUsers({required List<User> users}) async {
+  Future<void> writeUsers(
+      {required int page, required List<User> users}) async {
     final usersString = users.map((e) => jsonEncode(e)).toList();
-    await _keyValueStorage.setStringList('users', usersString);
+    await _keyValueStorage.setStringList('users$page', usersString);
   }
 }

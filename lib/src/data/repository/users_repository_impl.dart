@@ -26,11 +26,11 @@ class UsersRepositoryImpl implements UsersRepository {
       final response = await _usersNetworkDataProvider.fetchUsers(page: page);
       final users = response.data;
       if (users.isNotEmpty) {
-        await _usersStorage.writeUsers(users: users);
+        await _usersStorage.writeUsers(users: users, page: page);
       }
       return users;
     } else {
-      final response = _usersStorage.readUsers();
+      final response = _usersStorage.readUsers(page: page, pageSize: 6);
       return response;
     }
   }

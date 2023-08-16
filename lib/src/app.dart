@@ -26,6 +26,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     final httpClient = HTTPClient.getInstance();
     final keyValueStorage = KeyValueStorage.getInstance();
+
     return GetMaterialApp(
       title: 'Reqres',
       theme: ThemeData(
